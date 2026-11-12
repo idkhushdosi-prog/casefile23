@@ -1,0 +1,316 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme="night"], [data-theme="night"] *));
+
+:root,
+[data-theme="light"] {
+  --desk-bg: #DFCFA8;
+  --manila: #E8D5A8;
+  --manila-dark: #D9C28A;
+  --paper: #F6EEDB;
+  --paper-card: #FCF7EA;
+  --ink: #1B1B1B;
+  --ink-muted: #554C3D;
+  --stamp-red: #C8102E;
+  --blueprint: #1F3A93;
+  --blueprint-ink: #1F3A93;
+  --highlighter: #FFE066;
+  --cork: #B88B58;
+  --cork-dark: #9B7042;
+  --border-ink: #2C251D;
+  --btn-shadow: #2C251D;
+  --rule-line: rgba(31, 58, 147, 0.16);
+  --margin-line: rgba(200, 16, 46, 0.28);
+  --shadow-paper: rgba(27, 27, 27, 0.14);
+  --tape-bg: rgba(255, 244, 196, 0.72);
+  --coffee-stain: rgba(124, 78, 36, 0.12);
+  --desk-line: rgba(0, 0, 0, 0.025);
+}
+
+[data-theme="night"] {
+  --desk-bg: #0E1116;
+  --manila: #181D25;
+  --manila-dark: #202733;
+  --paper: #12161D;
+  --paper-card: #1B212B;
+  --ink: #E6EDF3;
+  --ink-muted: #98A3B3;
+  --stamp-red: #E13A4B;
+  --blueprint: #2557D6;
+  --blueprint-ink: #7CB3FF;
+  --highlighter: #F4C842;
+  --cork: #352A20;
+  --cork-dark: #261E16;
+  --border-ink: #323B4B;
+  --btn-shadow: #05070A;
+  --rule-line: rgba(124, 179, 255, 0.08);
+  --margin-line: rgba(225, 58, 75, 0.24);
+  --shadow-paper: rgba(0, 0, 0, 0.45);
+  --tape-bg: rgba(244, 200, 66, 0.18);
+  --coffee-stain: rgba(37, 87, 214, 0.06);
+  --desk-line: rgba(255, 255, 255, 0.02);
+}
+
+html,
+body {
+  min-height: 100%;
+  overflow-x: clip;
+  background-color: var(--desk-bg);
+  color: var(--ink);
+  font-family: var(--font-inter), var(--font-devanagari), system-ui, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+[data-sepia="true"] {
+  filter: sepia(0.78) contrast(1.04) brightness(0.97);
+}
+
+/* Subtle paper grain + vintage tabletop pixel grid */
+.desk-surface {
+  background-color: var(--desk-bg);
+  background-image:
+    radial-gradient(circle at 18% 12%, var(--coffee-stain) 0%, transparent 26%),
+    radial-gradient(circle at 86% 82%, var(--coffee-stain) 0%, transparent 30%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 31px,
+      var(--desk-line) 31px,
+      var(--desk-line) 32px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 31px,
+      var(--desk-line) 31px,
+      var(--desk-line) 32px
+    );
+}
+
+/* School notebook ruled lines (narrow margin on <640px phones, classic on sm+) */
+.ruled-paper {
+  background-color: var(--paper-card);
+  background-image:
+    linear-gradient(90deg, transparent 20px, var(--margin-line) 20px, var(--margin-line) 22px, transparent 22px),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 30px,
+      var(--rule-line) 30px,
+      var(--rule-line) 31px
+    );
+  background-position: 0 10px;
+}
+
+@media (min-width: 640px) {
+  .ruled-paper {
+    background-image:
+      linear-gradient(90deg, transparent 36px, var(--margin-line) 36px, var(--margin-line) 38px, transparent 38px),
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 30px,
+        var(--rule-line) 30px,
+        var(--rule-line) 31px
+      );
+  }
+}
+
+.corkboard-surface {
+  background-color: var(--cork);
+  background-image:
+    radial-gradient(rgba(0, 0, 0, 0.14) 1px, transparent 0),
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+/* Typography utilities */
+.font-typewriter {
+  font-family: var(--font-special-elite), var(--font-courier), var(--font-devanagari), monospace;
+  line-height: 1.5;
+}
+
+.font-mono-doc {
+  font-family: var(--font-courier), var(--font-devanagari), monospace;
+  line-height: 1.55;
+}
+
+.font-stamp {
+  font-family: var(--font-permanent-marker), var(--font-caveat), var(--font-devanagari), cursive;
+}
+
+.font-hand {
+  font-family: var(--font-caveat), var(--font-devanagari), cursive;
+  line-height: 1.45;
+}
+
+/* Devanagari-safe inputs */
+input,
+textarea,
+select {
+  font-family: var(--font-inter), var(--font-devanagari), system-ui, sans-serif;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+/* Tactile vintage-arcade button press depth */
+.tactile-btn {
+  position: relative;
+  min-height: 44px;
+  border: 2px solid var(--border-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 3px 0 var(--btn-shadow);
+  will-change: transform;
+  transition: transform 0.1s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.1s ease, background-color 0.15s ease;
+}
+
+.tactile-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 4px 0 var(--btn-shadow);
+}
+
+.tactile-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 1px 0 var(--btn-shadow);
+}
+
+.tactile-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Design-Spells light sweep for hero/primary CTAs */
+.btn-sheen {
+  overflow: hidden;
+}
+
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  transform: translateX(-160%) skewX(-18deg);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .btn-sheen:hover:not(:disabled)::after {
+    transform: translateX(280%) skewX(-18deg);
+  }
+}
+
+/* Layered spatial game panel depth */
+.game-panel {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    4px 5px 0 var(--shadow-paper);
+}
+
+[data-theme='night'] .game-panel {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    4px 5px 0 var(--shadow-paper);
+}
+
+.spatial-card {
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .spatial-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      5px 7px 0 var(--shadow-paper);
+  }
+}
+
+/* Subtle retro CRT / phosphor grid for classroom monitor & quest badges */
+.crt-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.035) 3px,
+    rgba(0, 0, 0, 0.035) 4px
+  );
+}
+
+[data-theme='night'] .crt-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(124, 179, 255, 0.04) 3px,
+    rgba(124, 179, 255, 0.04) 4px
+  );
+}
+
+/* Fluid typography for every phone screen ratio (320px SE -> desktop) */
+.fluid-hero-title {
+  font-size: clamp(1.75rem, 6.4vw, 3.15rem);
+  line-height: 1.08;
+}
+
+.fluid-page-title {
+  font-size: clamp(1.35rem, 4.6vw, 2rem);
+  line-height: 1.18;
+}
+
+/* Accessible focus */
+*:focus-visible {
+  outline: 2.5px solid var(--blueprint-ink);
+  outline-offset: 2px;
+}
+
+/* Highlighter swipe */
+.highlighter-mark {
+  background: linear-gradient(104deg, transparent 0.9%, var(--highlighter) 2.4%, var(--highlighter) 96%, transparent 98%);
+  padding: 0.05em 0.35em;
+  border-radius: 3px;
+  color: #14181F;
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .btn-sheen::after {
+    display: none;
+  }
+}
+
+@keyframes wiggleError {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: wiggleError 0.35s ease-in-out;
+}
